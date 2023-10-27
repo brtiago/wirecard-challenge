@@ -6,6 +6,7 @@ import lombok.*;
 
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -20,6 +21,7 @@ public class Card {
     @ManyToOne
     private Buyer buyer;
     private String holderName;
+    @Column(name = "card_number")
     private String number;
     private String expirationDate;
     private String cvv;
