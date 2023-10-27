@@ -14,8 +14,8 @@ public record PaymentResponseDTO(
         BigDecimal amount,
         PaymentMethod type,
         PaymentStatus status,
-        String  holderName,
-        String  cardNumber,
+        String holderName,
+        String cardNumber,
         String expirationDate,
         String cvv
 ) {
