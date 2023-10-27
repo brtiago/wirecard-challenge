@@ -1,0 +1,1 @@
+alter table payments add boleto varchar(48);
