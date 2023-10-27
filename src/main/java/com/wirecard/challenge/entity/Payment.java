@@ -1,6 +1,6 @@
 package com.wirecard.challenge.entity;
 
-import com.wirecard.challenge.dto.CreatePaymentDTO;
+import com.wirecard.challenge.dto.PaymentRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -37,9 +37,10 @@ public class Payment {
     private PaymentStatus status;
     private String boleto;
     @ManyToOne
+    @JoinColumn(name = "card_id")
     private Card card;
 
-    public Payment(CreatePaymentDTO dto) {
+    public Payment(PaymentRequestDTO dto) {
         this.client = new Client(dto.idClient());
         Buyer buyer = new Buyer();
         this.buyer = buyer;
