@@ -1,5 +1,6 @@
 package com.wirecard.challenge.dto;
 
+import com.wirecard.challenge.entity.Payment;
 import com.wirecard.challenge.entity.PaymentMethod;
 import com.wirecard.challenge.entity.PaymentStatus;
 import lombok.Getter;
@@ -19,4 +20,20 @@ public record PaymentResponseDTO(
         String expirationDate,
         String cvv
 ) {
+    public PaymentResponseDTO(Payment payment){
+        this(
+                payment.getClient().getId(),
+                payment.getBuyer().getName(),
+                payment.getBuyer().getEmail(),
+                payment.getBuyer().getCpf(),
+                payment.getAmount(),
+                payment.getType(),
+                payment.getStatus(),
+                payment.getCard().getHolderName(),
+                payment.getCard().getNumber(),
+                payment.getCard().getExpirationDate(),
+                payment.getCard().getCvv()
+        );
+
+    }
 }

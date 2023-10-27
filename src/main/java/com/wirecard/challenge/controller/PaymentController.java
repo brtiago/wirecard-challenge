@@ -1,5 +1,6 @@
 package com.wirecard.challenge.controller;
 
+import com.wirecard.challenge.dto.PaymentListByIdDTO;
 import com.wirecard.challenge.dto.PaymentRequestDTO;
 import com.wirecard.challenge.dto.PaymentResponseDTO;
 import com.wirecard.challenge.entity.Payment;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("payments")
@@ -25,28 +27,20 @@ public class PaymentController {
     @PostMapping
     public ResponseEntity<PaymentResponseDTO> create(@RequestBody PaymentRequestDTO dto) throws Exception {
         Payment payment = paymentService.createPayment(dto);
-        PaymentResponseDTO response = new PaymentResponseDTO(
-                payment.getClient().getId(),
-                payment.getBuyer().getName(),
-                payment.getBuyer().getEmail(),
-                payment.getBuyer().getCpf(),
-                payment.getAmount(),
-                payment.getType(),
-                payment.getStatus(),
-                payment.getCard().getHolderName(),
-                payment.getCard().getNumber(),
-                payment.getCard().getExpirationDate(),
-                payment.getCard().getCvv()
-        );
+        PaymentResponseDTO response = new PaymentResponseDTO(payment);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
      }
 
     @Operation(summary = "List all payments")
     @GetMapping
-    public ResponseEntity<List<Payment>> listAll(){
-        List<Payment> payments = paymentService.listAll();
-        return ResponseEntity.status(HttpStatus.OK).body(payments);
-     }
+    public ResponseEntity<List<PaymentListByIdDTO>> listAll() {
+        List<PaymentListByIdDTO> paymentListDTOs = paymentService.listAll()
+                .stream()
+                .map(payment -> new PaymentListByIdDTO(payment))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(paymentListDTOs);
+    }
 
 
 
