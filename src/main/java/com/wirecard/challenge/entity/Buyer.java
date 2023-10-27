@@ -1,6 +1,6 @@
 package com.wirecard.challenge.entity;
 
-import com.wirecard.challenge.dto.CreatePaymentDTO;
+import com.wirecard.challenge.dto.PaymentRequestDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
@@ -24,7 +24,7 @@ public class Buyer {
     @Column(unique = true)
     private String cpf;
 
-    public Buyer(CreatePaymentDTO dto) {
+    public Buyer(PaymentRequestDTO dto) {
         this.name = dto.name();
         this.email = dto.email();
         this.cpf = dto.cpf();
